@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Decentralized Lost and Found Board DApp built on Ethereum blockchain">
+    <title>Lost &amp; Found Board — Decentralized DApp</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- ── Header ───────────────────────────────────────── -->
+    <header id="app-header">
+        <div class="header-inner">
+            <h1 id="app-title">🔍 Lost &amp; Found Board</h1>
+            <p class="subtitle">Decentralized · Transparent · Trustless</p>
+            <button id="btn-connect" onclick="connectWallet()">Connect MetaMask</button>
+            <div id="wallet-info" class="hidden">
+                <span id="wallet-address"></span>
+                <span id="network-name" class="badge"></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- ── Status Bar ───────────────────────────────────── -->
+    <div id="status-bar" class="hidden">
+        <span id="status-message"></span>
+    </div>
+
+    <!-- ── Main Content ─────────────────────────────────── -->
+    <main id="main-content">
+
+        <!-- Report Form -->
+        <section id="report-section" class="card">
+            <h2>📝 Report an Item</h2>
+            <form id="report-form" onsubmit="reportItem(event)">
+                <div class="form-row">
+                    <label for="input-type">Type</label>
+                    <select id="input-type" required>
+                        <option value="0">Lost</option>
+                        <option value="1">Found</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <label for="input-title">Title</label>
+                    <input type="text" id="input-title" placeholder="e.g. Blue backpack" maxlength="100" required>
+                </div>
+                <div class="form-row">
+                    <label for="input-description">Description</label>
+                    <textarea id="input-description" placeholder="Describe the item in detail..." maxlength="500" required></textarea>
+                </div>
+                <div class="form-row">
+                    <label for="input-location">Location</label>
+                    <input type="text" id="input-location" placeholder="e.g. Library, Block C" required>
+                </div>
+                <div class="form-row">
+                    <label for="input-contact">Contact Info</label>
+                    <input type="text" id="input-contact" placeholder="e.g. email or phone" required>
+                </div>
+                <button type="submit" id="btn-report" class="btn-primary">Submit Report</button>
+            </form>
+        </section>
+
+        <!-- Retrieve / Search -->
+        <section id="search-section" class="card">
+            <h2>🔎 Retrieve Item by ID</h2>
+            <div class="form-row inline">
+                <input type="number" id="input-search-id" placeholder="Item ID" min="1">
+                <button onclick="getItemById()" class="btn-secondary" id="btn-search">Search</button>
+            </div>
+            <div id="search-result" class="hidden"></div>
+        </section>
+
+        <!-- Resolve Item -->
+        <section id="resolve-section" class="card">
+            <h2>✅ Resolve / Return Item</h2>
+            <p class="hint">Only the original reporter can resolve their own item.</p>
+            <div class="form-row inline">
+                <input type="number" id="input-resolve-id" placeholder="Item ID" min="1">
+                <button onclick="resolveItem()" class="btn-accent" id="btn-resolve">Mark Resolved</button>
+            </div>
+        </section>
+
+        <!-- Admin Resolve -->
+        <section id="admin-section" class="card">
+            <h2>🛡️ Admin: Force Resolve</h2>
+            <p class="hint">Only the contract owner can force-resolve items.</p>
+            <div class="form-row inline">
+                <input type="number" id="input-admin-id" placeholder="Item ID" min="1">
+                <button onclick="adminResolve()" class="btn-danger" id="btn-admin-resolve">Admin Resolve</button>
+            </div>
+        </section>
+
+        <!-- Items List -->
+        <section id="items-section" class="card full-width">
+            <div class="section-header">
+                <h2>📋 All Reported Items</h2>
+                <button onclick="loadAllItems()" class="btn-secondary" id="btn-refresh">Refresh</button>
+            </div>
+            <div id="items-container">
+                <p class="placeholder-text">Connect your wallet to view items.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ── Footer ───────────────────────────────────────── -->
+    <footer>
+        <p>Lost &amp; Found DApp &mdash; Built with Solidity, Ethers.js &amp; MetaMask</p>
+    </footer>
+
+    <!-- Ethers.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
